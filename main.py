@@ -1,74 +1,61 @@
-import os
-import requests
-import bs4
-from tqdm import tqdm
-from pathlib import Path
-import time
+#!/usr/bin/env python3
+"""
+Twitter Video Downloader - Main entry point
+A simple tool for downloading videos from Twitter posts.
 
-# 定义一个函数，用于下载视频
-def download_video(video_url, output_file_name) -> None:
-    """
-    从指定的URL下载视频到本地。
+Originally created by XiaomingX, enhanced by TSOlami with modular architecture,
+CLI support, and additional features.
+"""
 
-    参数:
-        video_url (str): 要下载的视频的URL。
-        output_file_name (str): 保存视频的文件名或路径。
-    """
-
-    # 发起请求，获取响应
-    response = requests.get(video_url, stream=True)
-    # 获取内容的总大小
-    total_size = int(response.headers.get("content-length", 0))
-    # 设置块大小
-    block_size = 1024
-    # 初始化进度条
-    progress_bar = tqdm(total=total_size, unit="B", unit_scale=True)
-
-    # 使用当前运行路径为下载路径
-    download_path = os.path.join(os.getcwd(), output_file_name)
-
-    # 以二进制写模式打开文件
-    with open(download_path, "wb") as video_file:
-        for data_chunk in response.iter_content(block_size):
-            progress_bar.update(len(data_chunk))
-            video_file.write(data_chunk)
-
-    # 关闭进度条
-    progress_bar.close()
-    print("视频成功下载！")
-    print("视频保存路径：" + download_path)
-
-# 定义一个函数，用于下载Twitter视频
-def download_twitter_video(twitter_post_url):
-    """
-    提取并下载Twitter帖子中的最高质量视频。
-
-    参数:
-        twitter_post_url (str): Twitter帖子URL。
-    """
-
-    # 构建API URL
-    api_request_url = f"https://twitsave.com/info?url={twitter_post_url}"
-
-    # 发起请求，获取响应
-    response = requests.get(api_request_url)
-    page_content = bs4.BeautifulSoup(response.text, "html.parser")
-    # 查找下载按钮
-    download_section = page_content.find_all("div", class_="origin-top-right")[0]
-    # 查找质量选择按钮
-    quality_links = download_section.find_all("a")
-    # 获取最高质量视频的URL
-    highest_quality_video_url = quality_links[0].get("href")
-    
-    # 使用时间戳生成视频文件名
-    timestamp = int(time.time())
-    video_file_name = f"{timestamp}.mp4"
-    
-    # 调用下载视频函数
-    download_video(highest_quality_video_url, video_file_name)
+import sys
+from cli import parse_arguments, get_twitter_url_from_args
+from utils import validate_twitter_url, normalize_twitter_url
+from downloader import download_twitter_video
+from config import load_config, set_default_output_dir
 
 def main():
-    download_twitter_video("https://twitter.com/dotey/status/1683738905412005888")
+    """Main function - handles command line arguments and executes download."""
+    args = parse_arguments()
+    
+    # Handle configuration-related commands
+    if args.show_config:
+        config = load_config()
+        print("Current configuration:")
+        for key, value in config.items():
+            print(f"  {key}: {value}")
+        return
+    
+    if args.set_default_dir:
+        set_default_output_dir(args.set_default_dir)
+        print(f"Default output directory set to: {args.set_default_dir}")
+        return
+    
+    # Get URL (prioritize positional argument, then --url flag)
+    twitter_url = get_twitter_url_from_args(args)
+    
+    if not twitter_url:
+        print("Error: Please provide a Twitter video URL")
+        print("Usage: python3 main.py <twitter_url>")
+        print("Or: python3 main.py --url <twitter_url>")
+        print("Use --help to see more options")
+        sys.exit(1)
+    
+    # Normalize and validate URL format
+    twitter_url = normalize_twitter_url(twitter_url)
+    if not validate_twitter_url(twitter_url):
+        print(f"Error: Invalid Twitter URL: {twitter_url}")
+        print("Please ensure URL contains twitter.com or x.com and includes /status/")
+        sys.exit(1)
+    
+    print(f"Downloading video from: {twitter_url}")
+    
+    try:
+        # Download video, use custom filename if provided
+        download_twitter_video(twitter_url, args.output, args.output_dir)
+        print("Download completed!")
+    except Exception as e:
+        print(f"Download failed: {str(e)}")
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()

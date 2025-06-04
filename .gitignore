@@ -160,3 +160,55 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+
+# Downloaded video files
+downloads/
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+*.flv
+
+# User configuration directory
+.twitter-video-download/
+
+# Temporary files
+temp/
+tmp/
+*.tmp
+
+# User-specific output directories (preserve default 'downloads' pattern)
+videos/
+output/
+media/
+
+# Log files specific to this app
+twitter_downloader.log
+download.log
+*.log
+
+# Backup files
+*.bak
+*.backup
+
+# OS specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Test files and artifacts
+test_downloads/
+test_videos/
+*.test
