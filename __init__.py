@@ -2,11 +2,11 @@
 Twitter Video Downloader
 
 A Python tool for downloading videos from Twitter posts.
-Fork of XiaomingX/twitter-video-download with enhanced features.
+Originally created by XiaomingX, fork by TSOlami with enhanced features.
 """
 
 __version__ = "1.0.0"
-__author__ = "TSOlami"
+__author__ = "XiaomingX, TSOlami"
 
 from .downloader import download_twitter_video, download_video, extract_video_url
 from .utils import validate_twitter_url, normalize_twitter_url

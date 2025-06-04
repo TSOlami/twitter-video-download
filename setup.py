@@ -25,7 +25,7 @@ with open("requirements.txt", "r", encoding="utf-8") as fh:
 setup(
     name="twitter-video-download",
     version=get_version(),
-    author="TSOlami",
+    author="XiaomingX, TSOlami",
     description="A Python tool for downloading videos from Twitter posts",
     long_description=long_description,
     long_description_content_type="text/markdown",

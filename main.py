@@ -2,6 +2,9 @@
 """
 Twitter Video Downloader - Main entry point
 A simple tool for downloading videos from Twitter posts.
+
+Originally created by XiaomingX, enhanced by TSOlami with modular architecture,
+CLI support, and additional features.
 """
 
 import sys
