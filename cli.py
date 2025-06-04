@@ -22,16 +22,16 @@ __version__ = get_version()
 
 def parse_arguments():
     """
-    解析命令行参数。
+    Parse command line arguments.
     
-    返回:
-        argparse.Namespace: 解析后的命令行参数
+    Returns:
+        argparse.Namespace: Parsed command line arguments
     """
     parser = argparse.ArgumentParser(
-        description="Twitter Video Downloader - 下载Twitter视频的工具",
+        description="Twitter Video Downloader - Tool for downloading Twitter videos",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
-示例用法:
+Usage examples:
   python3 main.py https://twitter.com/username/status/1234567890
   python3 main.py -u https://x.com/username/status/1234567890
   python3 main.py --url "https://twitter.com/username/status/1234567890"
@@ -85,12 +85,12 @@ def parse_arguments():
 
 def get_twitter_url_from_args(args):
     """
-    从命令行参数中获取Twitter URL。
+    Get Twitter URL from command line arguments.
     
-    参数:
-        args: 解析后的命令行参数
+    Args:
+        args: Parsed command line arguments
         
-    返回:
-        str or None: Twitter URL，如果未提供则返回None
+    Returns:
+        str or None: Twitter URL, or None if not provided
     """
     return args.url or args.url_flag

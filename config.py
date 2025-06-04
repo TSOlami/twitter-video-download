@@ -8,14 +8,14 @@ from pathlib import Path
 
 
 def get_config_file_path():
-    """获取配置文件路径。"""
+    """Get configuration file path."""
     config_dir = Path.home() / ".twitter-video-download"
     config_dir.mkdir(exist_ok=True)
     return config_dir / "config.json"
 
 
 def load_config():
-    """加载配置文件。"""
+    """Load configuration file."""
     config_file = get_config_file_path()
     default_config = {
         "default_output_dir": None,
@@ -37,17 +37,17 @@ def load_config():
 
 
 def save_config(config):
-    """保存配置到文件。"""
+    """Save configuration to file."""
     config_file = get_config_file_path()
     try:
         with open(config_file, 'w', encoding='utf-8') as f:
             json.dump(config, f, indent=4, ensure_ascii=False)
     except IOError as e:
-        print(f"警告: 无法保存配置文件: {str(e)}")
+        print(f"Warning: Unable to save configuration file: {str(e)}")
 
 
 def get_default_output_dir():
-    """获取默认输出目录。"""
+    """Get default output directory."""
     config = load_config()
     default_dir = config.get("default_output_dir")
     
@@ -58,7 +58,7 @@ def get_default_output_dir():
 
 
 def set_default_output_dir(output_dir):
-    """设置默认输出目录。"""
+    """Set default output directory."""
     config = load_config()
     config["default_output_dir"] = output_dir
     save_config(config)
