@@ -30,7 +30,7 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/TSOlami/twitter-video-download",
-    packages=find_packages(),
+    py_modules=['main', 'downloader', 'utils', 'cli', 'config'],
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: End Users/Desktop",

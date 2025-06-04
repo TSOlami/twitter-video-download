@@ -44,6 +44,10 @@ pip install --upgrade pip
 echo "📋 Installing dependencies..."
 pip install -r requirements.txt
 
+# Install the package in development mode
+echo "📦 Installing package in development mode..."
+pip install -e .
+
 echo "✅ Setup complete!"
 echo ""
 echo "To use the Twitter Video Downloader:"

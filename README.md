@@ -41,6 +41,20 @@ cd twitter-video-download
 
 This will automatically create a virtual environment and install all dependencies.
 
+### Package Installation (Optional)
+
+After running the setup script, you can also install the package system-wide or in development mode:
+
+```bash
+# Install in development mode (recommended for contributors)
+pip install -e .
+
+# Or install normally
+pip install .
+```
+
+This enables the `twitter-video-download` command globally.
+
 ### Manual Setup
 
 1. Clone this repository:
@@ -103,6 +117,21 @@ python3 main.py --help
 python3 main.py --version
 ```
 
+### Using the Console Script (After Package Installation)
+
+If you installed the package using `pip install -e .`, you can use the `twitter-video-download` command directly:
+
+```bash
+# Basic usage
+twitter-video-download https://twitter.com/username/status/1234567890
+
+# With options
+twitter-video-download -u https://x.com/username/status/1234567890 -o my_video.mp4
+
+# Show help
+twitter-video-download --help
+```
+
 ### Supported URL formats
 - `https://twitter.com/username/status/1234567890`
 - `https://x.com/username/status/1234567890`
@@ -135,6 +164,7 @@ is_valid = validate_twitter_url("https://twitter.com/username/status/1234567890"
 - **requests**: For making HTTP requests to TwitSave API
 - **beautifulsoup4**: For parsing HTML responses and extracting download links
 - **tqdm**: For displaying download progress bars
+- **setuptools**: For package installation and console script support
 
 ## Project Structure
 
